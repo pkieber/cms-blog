@@ -44,6 +44,46 @@ export const getPosts = async () => {
 };
 
 
+
+export const getPostDetails = async (slug) => {
+    const query = gql`
+        query GetPostDetails($slug : String!) {
+            post(where: {slug: $slug}) {
+                title
+                excerpt
+                featuredImage {
+                    url
+                }
+                author{
+                    name
+                    bio
+                    photo {
+                    url
+                    }
+                }
+                createdAt
+                slug
+                content {
+                    raw
+                }
+                categories {
+                    name
+                    slug
+                }
+            }
+        }
+    `;
+
+    try {
+        const result = await request(graphqlAPI, query, { slug });
+        return result.post;
+    } catch (error) {
+        console.error('Error fetching post details:', error);
+        return null;
+    }
+};
+
+
 export const getRecentPosts = async () => {
     const query = gql`
         query GetPostDetails() {
@@ -72,7 +112,7 @@ export const getRecentPosts = async () => {
 
 
 // Similar posts --> excluding the current slug, but showing slugs within the same category. 
-export const getSimilarPosts = async () => {
+export const getSimilarPosts = async (categories, slug) => {
     const query = gql`
         query GetPostDetails($slug: String!, $categories: [String!]) {
             posts(
@@ -90,7 +130,7 @@ export const getSimilarPosts = async () => {
     `;
 
     try {
-        const result = await request(graphqlAPI, query);
+        const result = await request(graphqlAPI, query, { categories, slug });
         return result.posts;
     } catch (error) {
         console.error('Error fetching similar posts:', error);
