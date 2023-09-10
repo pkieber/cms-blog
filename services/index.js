@@ -191,3 +191,33 @@ export const getComments = async (slug) => {
         return [];
     }
 };
+
+
+export const getFeaturedPosts = async () => {
+    const query = gql`
+        query GetCategoryPost() {
+            posts(where: {featuredPost: true}) {
+            author {
+                name
+                photo {
+                    url
+                }
+            }
+            featuredImage {
+                url
+            }
+            title
+            slug
+            createdAt
+            }
+        }   
+    `;
+
+    try {
+        const result = await request(graphqlAPI, query);
+        return result.posts;
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+        return [];
+    }
+};

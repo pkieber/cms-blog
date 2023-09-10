@@ -17,7 +17,7 @@ const CommentsForm = ({ slug }) => {
     
 
 
-    const handlePostSubmission = () => {
+    const handleCommentSubmission = () => {
         setError(false);
 
         const { value: comment } = commentEl.current;
@@ -32,6 +32,8 @@ const CommentsForm = ({ slug }) => {
         }
 
         const commentObj = { name, email, comment, slug }
+
+
 
         if(storeData) {
             window.localStorage.setItem('name', name); 
@@ -63,16 +65,13 @@ const CommentsForm = ({ slug }) => {
                 />
             </div>
 
-
-            <div className='grid grid-cols-1 lg:grid-cols-1 gap-4 mb-4'>
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4'>
                 <input 
                     type="text" ref={nameEl}
                     className='py-2 px-4 outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700'
                     placeholder="Name"
                     name="name"
                 />
-            </div>
-            <div className='grid grid-cols-1 lg:grid-cols-1 gap-4 mb-4'>
                 <input 
                     type="text" ref={emailEl}
                     className='py-2 px-4 outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700'
@@ -88,12 +87,12 @@ const CommentsForm = ({ slug }) => {
                 </div>
             </div>
 
-            {error && <p className="text-xs text-red-500">All fields are mandatory</p>}
+            {error && <p className="text-xs text-red-500">All fields are required.</p>}
 
             <div className="mt-8">
                 <button 
                     type="button" 
-                    onClick={handlePostSubmission} 
+                    onClick={handleCommentSubmission} 
                     className="transition duration-500 ease hover:bg-indigo-900 inline-block bg-pink-600 text-lg font-medium rounded-full text-white px-8 py-3 cursor-pointer"
                     >
                     Post Comment
