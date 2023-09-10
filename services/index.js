@@ -93,7 +93,27 @@ export const getSimilarPosts = async () => {
         const result = await request(graphqlAPI, query);
         return result.posts;
     } catch (error) {
-        console.error('Error fetching recent posts:', error);
+        console.error('Error fetching similar posts:', error);
+        return [];
+    }
+};
+
+
+export const getCategories = async () => {
+    const query = gql`
+        query GetCategories {
+            categories {
+                name
+                slug
+            }
+        }
+    `;
+
+    try {
+        const result = await request(graphqlAPI, query);
+        return result.categories;
+    } catch (error) {
+        console.error('Error fetching categories:', error);
         return [];
     }
 };

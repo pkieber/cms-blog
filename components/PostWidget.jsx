@@ -8,7 +8,7 @@ import { getRecentPosts, getSimilarPosts } from '@/services';
 // Inside a post, related posts should be shown.
 // useEffect only changes when slug changes. 
 const PostWidget = ({ categories, slug }) => {
-    const [relatedPosts, setRelatedPosts] = useState([])
+    const [relatedPosts, setRelatedPosts] = useState([]);
 
     useEffect(() => {
         if(slug) {
