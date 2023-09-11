@@ -2,7 +2,6 @@ import { request, gql } from 'graphql-request';
 
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT;
 
-
 export const getPosts = async () => {
     const query = gql`
         query MyQuery {
@@ -42,7 +41,6 @@ export const getPosts = async () => {
         return [];
     }
 };
-
 
 
 export const getPostDetails = async (slug) => {
@@ -158,7 +156,7 @@ export const getCategories = async () => {
     }
 };
 
-
+/*
 export const submitComment = async (obj) => {
     const result = await fetch('/api/comments', {
         method: 'POST',
@@ -169,6 +167,28 @@ export const submitComment = async (obj) => {
     });
 
     return result.json();
+};
+*/
+
+
+export const submitComment = async (obj) => {
+    try {
+        const result = await fetch('/api/comments', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(obj),
+        });
+    
+        if (!result.ok) {
+            throw new Error(`Failed to submit comment. HTTP status ${result.status}`);
+        }
+        return result.json();
+    } catch (error) {
+        console.error('Error submitting comment:', error);
+        throw error;
+    }
 };
 
 
@@ -253,9 +273,13 @@ export const getAdjacentPosts = async (createdAt, slug) => {
         }
     `;
 
-    const result = await request(graphqlAPI, query, { slug, createdAt });
-
-    return { next: result.next[0], previous: result.previous[0] };
+    try {
+        const result = await request(graphqlAPI, query, { slug, createdAt });
+        return { next: result.next[0], previous: result.previous[0] };
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+        return [];
+    }
 };
 
 
@@ -291,7 +315,11 @@ export const getCategoryPost = async (slug) => {
         }
     `;
 
-    const result = await request(graphqlAPI, query, { slug });
-
-    return result.postsConnection.edges;
+    try {
+        const result = await request(graphqlAPI, query, { slug });
+        return result.postsConnection.edges;
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+        return [];
+    }
 };
