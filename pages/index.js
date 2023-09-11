@@ -8,7 +8,7 @@ export default function Home({ posts }) {
     <div className='container mx-auto px-10 mb-8'>
 
       <Head>
-        <title>A Drop of Tech - BLOG</title>
+        <title>A Drop of Tech | BLOG</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
