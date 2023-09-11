@@ -10,12 +10,12 @@ const CommentsForm = ({ slug }) => {
     const emailEl = useRef();
     const storeDataEl = useRef();
 
+
     useEffect(() => {
         nameEl.current.value = window.localStorage.getItem('name');
         emailEl.current.value = window.localStorage.getItem('email');
     }, [])
     
-
 
     const handleCommentSubmission = () => {
         setError(false);
@@ -33,8 +33,6 @@ const CommentsForm = ({ slug }) => {
 
         const commentObj = { name, email, comment, slug }
 
-
-
         if(storeData) {
             window.localStorage.setItem('name', name); 
             window.localStorage.setItem('email', email); 
@@ -42,6 +40,7 @@ const CommentsForm = ({ slug }) => {
             window.localStorage.removeItem('name', name); 
             window.localStorage.removeItem('email', email); 
         }
+
 
         submitComment(commentObj)
             .then((res) => {
@@ -52,6 +51,7 @@ const CommentsForm = ({ slug }) => {
                 }, 3000);
             })
     }
+
 
     return (
         <div className='bg-white shadow-lg rounded-lg p-8 pb-12 mb-8'>
@@ -104,3 +104,5 @@ const CommentsForm = ({ slug }) => {
 }
 
 export default CommentsForm
+
+

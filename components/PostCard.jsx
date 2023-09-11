@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const PostCard = ( { post }) => {
     //console.log(post);
